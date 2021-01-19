@@ -8,7 +8,7 @@
 <!-- Dice Roller -->
 
 <div class="main">
-	<div>
+	<div class="hide-xs hide-sm">
 		<SpellCompare />
 	</div>
 	<div class="flex">
@@ -40,5 +40,7 @@
 	.flex {
 		display: flex;
 		align-items: start;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
 	}
 </style>

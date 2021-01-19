@@ -75,15 +75,15 @@
 
 <div class="card">
   <div> <b> Dice Roller </b> </div>
-  <div class="mar-b">
-    <a class="button" on:click={ () => addDie(1, 2) }> 1d2 </a>
-    <a class="button" on:click={ () => addDie(1, 4) }> 1d4 </a>
-    <a class="button" on:click={ () => addDie(1, 6) }> 1d6 </a>
-    <a class="button" on:click={ () => addDie(1, 8) }> 1d8 </a>
-    <a class="button" on:click={ () => addDie(1, 10) }> 1d10 </a>
-    <a class="button" on:click={ () => addDie(1, 12) }> 1d12 </a>
-    <a class="button" on:click={ () => addDie(1, 20) }> 1d20 </a>
-    <a class="button" on:click={ () => addDie(1, 100) }> 1d100 </a>
+  <div class="mar-b flex">
+    <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 2) }> 1d2 </a> </div>
+    <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 4) }> 1d4 </a> </div>
+    <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 6) }> 1d6 </a> </div>
+    <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 8) }> 1d8 </a> </div>
+    <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 10) }> 1d10 </a> </div>
+    <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 12) }> 1d12 </a> </div>
+    <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 20) }> 1d20 </a> </div>
+    <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 100) }> 1d100 </a> </div>
   </div>
   <div class="row">
     <div class="col">
@@ -115,7 +115,18 @@
     display: inline-block;
   }
 
-  .mar-b {
+  .button {
+
+    width: 100%;
+  }
+
+  .flex {
+      display: flex;
+      flex-wrap: wrap;
+  }
+
+  .die-holder {
+    margin-left: 8px;
     margin-bottom: 8px;
   }
 </style>
