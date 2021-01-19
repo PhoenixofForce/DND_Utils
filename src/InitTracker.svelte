@@ -20,6 +20,7 @@
 
     allInits.push({ name: currentName, init: currentInit });
     allInits.sort((a, b) => a.init - b.init);
+    allInits.reverse();
     allInits = allInits;
 
     currentInit = "";
