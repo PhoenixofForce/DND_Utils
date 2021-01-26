@@ -66,8 +66,8 @@
   <!-- Inputs and buttons -->
   <input placeholder="Name (Default: Enemy)" bind:this={ nameRef } bind:value={ currentName } />
   <input placeholder="Initiative (Default: d20)" type="number" bind:value={ currentInit }  on:keyup|preventDefault={ handleKeyup }>
-  <a class="button" on:click={ clearAll }> Clear </a>
-  <a class="button primary" on:click={ addInit }> Add </a><br>
+  <a class="button" on:click={ clearAll }> Clear </a><br>
+  <a class="button primary" on:click={ addInit }> Add </a>
 
   <!-- Display Inits -->
   {#each allInits as player, i}
