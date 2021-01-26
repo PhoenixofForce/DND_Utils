@@ -1,5 +1,7 @@
 <script>
   import { Dice } from './Dice.js';
+  import AutoComplete from "simple-svelte-autocomplete";
+  import { spells } from './data/spells.js';
 
   let diceToRoll = [];
   let lastRoll = "";
@@ -7,6 +9,10 @@
   let timer;
 
   let text;
+
+  let spellLevel;
+  let currentSpell;
+  let prevSpell;
 
   function addDie(count, max) {
     let existingDie = diceToRoll.find(e => e.max == max);
@@ -27,6 +33,19 @@
     lastRoll = curRoll.join(" + ");
     result = curRoll.reduce((a, c) => a + c)
     diceToRoll = [];
+  }
+
+  function rollSpell() {
+    if(currentSpell) {
+      let rolls = [];
+
+      rolls.push(currentSpell.basedamage.roll());
+      let die = new Dice(Math.floor(currentSpell.perlevel.getCount() * (spellLevel - currentSpell.level)), currentSpell.basedamage.getMax());
+      rolls.push(die.roll());
+
+      lastRoll = rolls.join(" + ");
+      result = rolls.reduce((a, c) => a + c)
+    }
   }
 
   function rollCustom() {
@@ -65,6 +84,13 @@
     }
   }
 
+  function setSpell() {
+    if(prevSpell != currentSpell) {
+        spellLevel = currentSpell? currentSpell.level: 1;
+        prevSpell = currentSpell;
+    }
+  }
+
   const debounce = (f, t) => {
 		clearTimeout(timer);
 		timer = setTimeout(() => {
@@ -75,6 +101,7 @@
 
 <div class="card">
   <div> <b> Dice Roller </b> </div>
+
   <div class="mar-b flex">
     <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 2) }> 1d2 </a> </div>
     <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 4) }> 1d4 </a> </div>
@@ -85,16 +112,43 @@
     <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 20) }> 1d20 </a> </div>
     <div class="die-holder"> <a class="button" on:click={ () => addDie(1, 100) }> 1d100 </a> </div>
   </div>
+
+  <div class="row">
+    <div class="col">
+      <AutoComplete items={ spells } bind:selectedItem={ currentSpell } labelFieldName="name" onChange={ setSpell } showClear={ currentSpell } hideArrow={ currentSpell } />
+    </div>
+
+    <div class="col-2">
+      {#if currentSpell}
+        <select bind:value={ spellLevel }>
+          {#each Array(9-currentSpell.level +1) as _, i}
+            <option value={ i + currentSpell.level }> Level {i + currentSpell.level} </option>
+          {/each}
+        </select>
+      {/if}
+    </div>
+
+    <div class="col-2">
+      <a class="button is-full-width primary" on:click={ rollSpell }> Roll </a>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col">
       <input placeholder="Insert Custom Equation (Example: d20-2d6+2)" bind:value={ text }>
     </div>
-    <div class="col-2">
-      <a class="button is-full-width primary" on:click={ rollCustom }> Roll </a>
-    </div>
+
     <div class="col-2">
       <a class="button is-full-width" error on:click={ () => text = "" }> Clear </a>
     </div>
+
+    <div class="col-2">
+      <a class="button is-full-width primary" on:click={ rollCustom }> Roll </a>
+    </div>
+  </div>
+
+  <div>
+    <b>NOTE!</b> The current spell die are not completely right. Use at own risk.
   </div>
 
   {#each diceToRoll as die}

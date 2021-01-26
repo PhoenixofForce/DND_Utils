@@ -1,5 +1,6 @@
 <script>
   import { slide } from 'svelte/transition';
+  import { Dice } from './Dice.js';
 
   let nameRef;
 
@@ -9,7 +10,7 @@
   let allInits = [];
 
   function addInit() {
-    if(!currentInit) currentInit = 10;
+    if(!currentInit) currentInit = new Dice(1, 20).roll();
     if(!currentName) currentName = "Enemy";
 
     let count = allInits.filter(e => e.name.includes(currentName));
@@ -50,7 +51,7 @@
 <div class="card">
   <div> <b> Init Tracker </b> </div>
   <input placeholder="Name (Default: Enemy)" bind:this={ nameRef } bind:value={ currentName } />
-  <input placeholder="Initiative (Default: 10)" type="number" bind:value={ currentInit }  on:keyup|preventDefault={ handleKeyup }>
+  <input placeholder="Initiative (Default: d20)" type="number" bind:value={ currentInit }  on:keyup|preventDefault={ handleKeyup }>
   <a class="button primary" on:click={ addInit }> Add </a><br>
   <a class="button" on:click={ clearAll }> Clear </a>
   {#each allInits as player, i}
