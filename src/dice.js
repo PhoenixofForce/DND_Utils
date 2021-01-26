@@ -26,9 +26,10 @@ export class Dice {
 
   rollType(type) {
     if(type == 0) return this.minRoll();
+    if(type == 1) return this.avgRoll();
     if(type == 2) return this.maxRoll();
 
-    return this.avgRoll();
+    return this.roll();
   }
 
   getCount() {
@@ -37,5 +38,10 @@ export class Dice {
 
   getMax() {
     return this.max;
+  }
+
+  toString() {
+    if(this.max === 1) return this.count + "";
+    return this.count + "d" + this.max;
   }
 }

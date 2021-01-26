@@ -11,13 +11,16 @@
 	<div class="hide-xs hide-sm">
 		<SpellCompare />
 	</div>
+
 	<div class="flex">
 		<div>
 			<InitTracker />
 		</div>
+
 		<div>
 			<Recalc />
 		</div>
+
 		<div>
 		<DiceRoller />
 		</div>
